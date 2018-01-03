@@ -2,42 +2,62 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # Pins for Motor Driver Inputs
-Motor1A = 24
-Motor1B = 23
-Motor1E = 25
+Motor1A = 16
+Motor1B = 18
+Motor1E = 22
+
+Motor2A = 23
+Motor2B = 21
+Motor2E = 19
 
 
 def setup():
-    GPIO.setmode(GPIO.BCM)  # GPIO Numbering
-    GPIO.setup(Motor1A, GPIO.OUT)  # All pins as Outputs
+    # GPIO Numbering
+    GPIO.setmode(GPIO.BOARD)
+
+    # All pins as Outputs
+    GPIO.setup(Motor1A, GPIO.OUT)
     GPIO.setup(Motor1B, GPIO.OUT)
     GPIO.setup(Motor1E, GPIO.OUT)
 
+    GPIO.setup(Motor2A, GPIO.OUT)
+    GPIO.setup(Motor2B, GPIO.OUT)
+    GPIO.setup(Motor2E, GPIO.OUT)
 
-def loop():
-    # Going forwards
+
+def forward():
     GPIO.output(Motor1A, GPIO.HIGH)
     GPIO.output(Motor1B, GPIO.LOW)
     GPIO.output(Motor1E, GPIO.HIGH)
 
-    sleep(2)
-    # Going backwards
+    GPIO.output(Motor2A, GPIO.HIGH)
+    GPIO.output(Motor2B, GPIO.LOW)
+    GPIO.output(Motor2E, GPIO.HIGH)
+
+
+def backward():
     GPIO.output(Motor1A, GPIO.LOW)
     GPIO.output(Motor1B, GPIO.HIGH)
     GPIO.output(Motor1E, GPIO.HIGH)
 
-    sleep(2)
-    # Stop
+    GPIO.output(Motor2A, GPIO.LOW)
+    GPIO.output(Motor2B, GPIO.HIGH)
+    GPIO.output(Motor2E, GPIO.HIGH)
+
+
+def stop():
     GPIO.output(Motor1E, GPIO.LOW)
+    GPIO.output(Motor2E, GPIO.LOW)
 
 
 def destroy():
     GPIO.cleanup()
 
 
-if __name__ == '__main__':  # Program start from here
+if __name__ == '__main__':
     setup()
     try:
-        loop()
+        forward()
+        sleep(2)
     except KeyboardInterrupt:
         destroy()
