@@ -59,5 +59,6 @@ if __name__ == '__main__':
     try:
         forward()
         sleep(2)
+        stop()
     except KeyboardInterrupt:
         destroy()
