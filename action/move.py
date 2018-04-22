@@ -6,9 +6,9 @@ Motor1A = 16
 Motor1B = 18
 Motor1E = 22
 
-Motor2A = 23
+Motor2A = 19
 Motor2B = 21
-Motor2E = 19
+Motor2E = 23
 
 
 def setup():
@@ -77,8 +77,16 @@ def destroy():
 if __name__ == '__main__':
     setup()
     try:
+        forward()
+        sleep(1)
         backward()
+        sleep(1)
+        left()
+        sleep(1)
+        right()
         sleep(1)
         stop()
     except KeyboardInterrupt:
+        pass
+    finally:
         destroy()
